@@ -3,15 +3,21 @@ async function LibraXIdVerification(payload_data, callback){
 
     // Check if Ocp-Apim-Subscription-Key is present
     if(!configuration.Subscription_Key){
-        console.log('Missing required Ocp-Apim-Subscription-Key. Skipping.');
-        return callback(null);
+            console.log('Missing required Ocp-Apim-Subscription-Key. Skipping.');
+            return callback(new Error("Missing required Ocp-Apim-Subscription-Key. Skipping."));
     }
 
     // Check if First Name or Last name exists
     if (!payload_data.FirstName ||
         !payload_data.LastName){
             console.log('Missing First name or Last name');
-            return callback(null);
+            return callback(new Error("Missing First name or Last name"));
+    }
+    
+    // Check if base64encoding for Image is present
+    if (!payload_data.base64encoding){
+            console.log('Missing base64encoded string');
+            return callback(new Error("Missing base64encoded string"));
     }
     
     // Make Post request to LibraX ID Verification Service 
